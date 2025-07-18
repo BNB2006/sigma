@@ -138,7 +138,7 @@ const Live = () =>{
         className='h-[100vh] w-full flex justify-center items-center text-center'
         >
             
-      <h1 className="text-2xl text-white">Liveblock Cursor Chat function</h1>
+      <h1 className="text-2xl text-white">Liveblock Cursor Emoji function</h1>
 
       {reaction.map((r) => (
         <FlyingReaction
