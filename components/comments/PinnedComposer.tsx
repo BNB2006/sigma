@@ -1,7 +1,7 @@
 "use client";
 
-import { Composer, ComposerProps } from "@liveblocks/react-ui";
 import Image from "next/image";
+import { Composer, ComposerProps } from "@liveblocks/react-comments";
 
 type Props = {
   onComposerSubmit: ComposerProps["onComposerSubmit"];

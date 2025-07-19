@@ -12,11 +12,11 @@ import { Slot } from "@radix-ui/react-slot";
 import * as Portal from "@radix-ui/react-portal";
 import { ComposerSubmitComment } from "@liveblocks/react-comments/primitives";
 
+import { useCreateThread } from "@/liveblocks.config";
 import { useMaxZIndex } from "@/lib/useMaxZIndex";
 
 import PinnedComposer from "./PinnedComposer";
 import NewThreadCursor from "./NewThreadCursor";
-import { useCreateThread } from "@liveblocks/react";
 
 type ComposerCoords = null | { x: number; y: number };
 

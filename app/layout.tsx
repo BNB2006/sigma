@@ -3,16 +3,17 @@ import { Work_Sans } from "next/font/google";
 import "./globals.css";
 import { Room } from "./Room";
 
+
 const workSans = Work_Sans({
-  variable: "--font-work-sans",
   subsets: ["latin"],
-  weight: ['400', '600', '700']
+  variable: "--font-work-sans",
+  weight: ["400", "600", "700"]
+
 });
 
-
 export const metadata: Metadata = {
-  title: "Sigma",
-  description: "A minimalastic Figma tool uisng Fabric.js and Liveblocks for real-time collaboration",
+  title: "Figma Clone",
+  description: "A minimalist Figma clone using fabric.js and Liveblocks for realtime Collaboration",
 };
 
 export default function RootLayout({
@@ -22,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${workSans.variable} ${workSans.variable} bg-gray-400 antialiased`}>
+      <body className={`${workSans.className} bg-primary-grey-200`}>
         <Room>
           {children}
         </Room>
