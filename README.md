@@ -54,5 +54,3 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-> This project is mainly created by a YouTuber. Credit: [Javascript Mastery](https://www.youtube.com/@javascriptmastery).
-
