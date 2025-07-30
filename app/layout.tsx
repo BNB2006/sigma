@@ -1,19 +1,18 @@
 import type { Metadata } from "next";
-import { Work_Sans } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { Room } from "./Room";
 
-
-const workSans = Work_Sans({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-work-sans",
-  weight: ["400", "600", "700"]
-
+  variable: "--font-inter",
+  weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Figma Clone",
-  description: "A minimalist Figma clone using fabric.js and Liveblocks for realtime Collaboration",
+  title: "Sigma",
+  description: "A modern collaborative design tool with real-time editing capabilities",
 };
 
 export default function RootLayout({
@@ -22,8 +21,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${workSans.className} bg-primary-grey-200`}>
+    <html lang="en" className="dark">
+      <body className={`${inter.className} bg-primary-background text-primary-text antialiased`}>
         <Room>
           {children}
         </Room>

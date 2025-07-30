@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import { handleCanvasMouseDown, handleCanvasMouseUp, handleCanvasObjectModified, handleCanvasObjectScaling, handleCanvasSelectionCreated, handleCanvaseMouseMove, handleResize, initializeFabric, renderCanvas } from "@/lib/canvas";
 import { ActiveElement, Attributes } from "@/types/type";
 import { useMutation, useRedo, useStorage, useUndo } from "@/liveblocks.config";
+import { LiveMap } from "@liveblocks/client";
 import { defaultNavElement } from "@/constants";
 import { handleDelete, handleKeyDown } from "@/lib/key-events";
 import { handleImageUpload } from "@/lib/shapes";
@@ -41,8 +42,8 @@ export default function Page() {
         fontSize: "",
         fontFamily: "",
         fontWeight: "",
-        fill: "#aabbcc",
-        stroke: "#aabbcc",
+        fill: "#6366F1",
+        stroke: "#6366F1",
     })
 
     const canvasObjects = useStorage((root) => root.canvasObjects);
@@ -56,8 +57,13 @@ export default function Page() {
         shapeData.objectId = objectId;
 
         const canvasObjects = storage.get("canvasObjects");
+        
+        if (!canvasObjects) {
+            storage.set("canvasObjects", new LiveMap());
+        }
 
-        canvasObjects.set(objectId, shapeData);
+        const canvasObjectsMap = storage.get("canvasObjects");
+        canvasObjectsMap.set(objectId, shapeData);
     }, [])
 
     const deleteShapeFromStorage = useMutation(({ storage }, shapeId) => {
@@ -71,9 +77,9 @@ export default function Page() {
 
         if (!canvasObjects || canvasObjects.size === 0) return true;
 
-        for (const [key, value] of canvasObjects.entries()) {
+        Array.from(canvasObjects.keys()).forEach((key) => {
             canvasObjects.delete(key);
-        }
+        });
 
         return canvasObjects.size === 0;
 
@@ -200,40 +206,48 @@ export default function Page() {
     }, [canvasObjects])
 
     return (
-        <>
-            <main className="h-screen overflow-hidden">
-                <Navbar
-                    activeElement={activeElement}
-                    handleActiveElement={handleActiveElement}
-                    imageInputRef={imageInputRef}
-                    handleImageUpload={(e: any) => {
-                        e.stopPropagation();
+        <div className="h-screen overflow-hidden bg-primary-background">
+           
+            <Navbar
+                activeElement={activeElement}
+                handleActiveElement={handleActiveElement}
+                imageInputRef={imageInputRef}
+                handleImageUpload={(e: any) => {
+                    e.stopPropagation();
 
-                        handleImageUpload({
-                            file: e.target.files[0],
-                            canvas: fabricRef as any,
-                            shapeRef,
-                            syncShapeInStorage,
-                        })
-                    }}
-                />
+                    handleImageUpload({
+                        file: e.target.files[0],
+                        canvas: fabricRef as any,
+                        shapeRef,
+                        syncShapeInStorage,
+                    })
+                }}
+            />
 
-                <section className="flex h-full flex-row">
-                    <LeftSidebar allShapes={Array.from(canvasObjects)} />
+            <div className="flex h-full">
+                <LeftSidebar allShapes={canvasObjects ? Array.from(canvasObjects.entries()) : []} />
+                
+                <div className="flex-1 relative">
                     <Live canvasRef={canvasRef} undo={undo} redo={redo} />
-                    <RightSidebar
-                        elementAttributes={elementAttributes}
-                        setElementAttributes={setElementAttributes}
-                        fabricRef={fabricRef}
-                        isEditingRef={isEditingRef}
-                        activeObjectRef={activeObjectRef}
-                        syncShapeInStorage={syncShapeInStorage}
-
-                    />
-                </section>
-
-            </main>
-        </>
-
+                    
+                    <div className="absolute top-4 left-4 z-10">
+                        <div className="bg-primary-surface/90 backdrop-blur-md border border-primary-border rounded-lg px-3 py-2 text-xs text-primary-textSecondary">
+                            <span className="font-medium text-primary-text">Sigma</span>
+                            <span className="mx-2">•</span>
+                            <span>Real-time collaboration</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <RightSidebar
+                    elementAttributes={elementAttributes}
+                    setElementAttributes={setElementAttributes}
+                    fabricRef={fabricRef}
+                    isEditingRef={isEditingRef}
+                    activeObjectRef={activeObjectRef}
+                    syncShapeInStorage={syncShapeInStorage}
+                />
+            </div>
+        </div>
     );
 }

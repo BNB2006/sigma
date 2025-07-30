@@ -17,12 +17,19 @@ const selectConfigs = [
     property: "fontFamily",
     placeholder: "Choose a font",
     options: fontFamilyOptions,
+    icon: "Aa",
   },
-  { property: "fontSize", placeholder: "30", options: fontSizeOptions },
+  { 
+    property: "fontSize", 
+    placeholder: "30", 
+    options: fontSizeOptions,
+    icon: "T",
+  },
   {
     property: "fontWeight",
     placeholder: "Semibold",
     options: fontWeightOptions,
+    icon: "B",
   },
 ];
 
@@ -39,30 +46,25 @@ const Text = ({
   fontWeight,
   handleInputChange,
 }: TextProps) => (
-  <div className='flex flex-col gap-3 border-b border-primary-grey-200 px-5 py-3'>
-    <h3 className='text-[10px] uppercase'>Text</h3>
-
-    <div className='flex flex-col gap-3'>
-      {RenderSelect({
-        config: selectConfigs[0],
-        fontSize,
-        fontWeight,
-        fontFamily,
-        handleInputChange,
-      })}
-
-      <div className='flex gap-2'>
-        {selectConfigs.slice(1).map((config) =>
-          RenderSelect({
-            config,
-            fontSize,
-            fontWeight,
-            fontFamily,
-            handleInputChange,
-          })
-        )}
+  <div className='space-y-4'>
+    {selectConfigs.map((config) => (
+      <div key={config.property} className="space-y-2">
+        <div className="flex items-center gap-2">
+          <span className="text-lg text-primary-accent font-bold">{config.icon}</span>
+          <h3 className='text-sm font-medium text-primary-text capitalize'>
+            {config.property === "fontFamily" ? "Font Family" : 
+             config.property === "fontSize" ? "Font Size" : "Font Weight"}
+          </h3>
+        </div>
+        <RenderSelect
+          config={config}
+          fontSize={fontSize}
+          fontWeight={fontWeight}
+          fontFamily={fontFamily}
+          handleInputChange={handleInputChange}
+        />
       </div>
-    </div>
+    ))}
   </div>
 );
 
@@ -71,6 +73,7 @@ type Props = {
     property: string;
     placeholder: string;
     options: { label: string; value: string }[];
+    icon: string;
   };
   fontSize: string;
   fontWeight: string;
@@ -86,7 +89,6 @@ const RenderSelect = ({
   handleInputChange,
 }: Props) => (
   <Select
-    key={config.property}
     onValueChange={(value) => handleInputChange(config.property, value)}
     value={
       config.property === "fontFamily"
@@ -96,7 +98,7 @@ const RenderSelect = ({
           : fontWeight
     }
   >
-    <SelectTrigger className='no-ring w-full rounded-sm border border-primary-grey-200'>
+    <SelectTrigger className='w-full'>
       <SelectValue
         placeholder={
           config.property === "fontFamily"
@@ -107,12 +109,11 @@ const RenderSelect = ({
         }
       />
     </SelectTrigger>
-    <SelectContent className='border-primary-grey-200 bg-primary-black text-primary-grey-300'>
+    <SelectContent>
       {config.options.map((option) => (
         <SelectItem
           key={option.value}
           value={option.value}
-          className=' hover:bg-primary-green hover:text-primary-black'
         >
           {option.label}
         </SelectItem>

@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,9 +8,106 @@
 @import "@liveblocks/react-comments/styles.css";
 
 * {
-  font-family:
-    work sans,
-    sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1A1A2E;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2A2A4A;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6366F1;
+}
+
+::selection {
+  background: rgba(99, 102, 241, 0.3);
+  color: #E8E8F0;
+}
+
+*:focus-visible {
+  outline: 2px solid #6366F1;
+  outline-offset: 2px;
+}
+
+* {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@layer base {
+  body {
+    @apply bg-primary-background text-primary-text antialiased;
+    background-image: 
+      radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary-accent text-white px-4 py-2 rounded-lg font-medium hover:bg-primary-accentHover hover:shadow-glow transition-all duration-200 hover:scale-105;
+  }
+
+  .btn-secondary {
+    @apply bg-primary-surface text-primary-text border border-primary-border px-4 py-2 rounded-lg font-medium hover:bg-primary-surfaceHover hover:border-primary-accent transition-all duration-200;
+  }
+
+  .btn-ghost {
+    @apply text-primary-textSecondary hover:text-primary-text hover:bg-primary-surfaceHover px-3 py-2 rounded-lg font-medium transition-all duration-200;
+  }
+
+  /* Card styles */
+  .card {
+    @apply bg-primary-surface border border-primary-border rounded-xl p-6 shadow-lg backdrop-blur-sm;
+  }
+
+  .card-hover {
+    @apply card hover:border-primary-accent hover:shadow-glow transition-all duration-200;
+  }
+
+  .input-modern {
+    @apply bg-primary-surface border border-primary-border rounded-lg px-4 py-3 text-primary-text placeholder-primary-textSecondary focus:border-primary-accent focus:ring-2 focus:ring-primary-accent/20 focus:outline-none transition-all duration-200;
+  }
+
+  .glass {
+    @apply bg-primary-surface/80 backdrop-blur-md border border-primary-border/50;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary-accent to-primary-accentHover bg-clip-text text-transparent;
+  }
+
+  .glow {
+    @apply shadow-glow;
+  }
+
+  .glow-lg {
+    @apply shadow-glow-lg;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+
+  .animate-pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
 }
 
 @layer utilities {
@@ -16,14 +116,30 @@
   }
 
   .input-ring {
-    @apply h-8 rounded-none border-none bg-transparent outline-none ring-offset-0 focus:ring-1 focus:ring-primary-green focus:ring-offset-0 focus-visible:ring-offset-0 !important;
+    @apply h-10 rounded-lg border border-primary-border bg-primary-surface text-primary-text outline-none ring-offset-0 focus:ring-2 focus:ring-primary-accent focus:ring-offset-0 focus-visible:ring-offset-0 transition-all duration-200 !important;
   }
 
   .right-menu-content {
-    @apply flex w-80 flex-col gap-y-1 border-none bg-primary-black py-4 text-white !important;
+    @apply flex w-80 flex-col gap-y-2 border border-primary-border bg-primary-surface/95 backdrop-blur-md py-4 text-primary-text rounded-xl shadow-xl !important;
   }
 
   .right-menu-item {
-    @apply flex justify-between px-3 py-2 hover:bg-primary-grey-200 !important;
+    @apply flex justify-between px-4 py-3 hover:bg-primary-surfaceHover rounded-lg mx-2 transition-all duration-200 !important;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .bg-grid {
+    background-image: 
+      linear-gradient(rgba(99, 102, 241, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99, 102, 241, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .bg-dots {
+    background-image: radial-gradient(circle, rgba(99, 102, 241, 0.3) 1px, transparent 1px);
+    background-size: 20px 20px;
   }
 }
