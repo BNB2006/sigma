@@ -20,7 +20,7 @@ const config = {
     extend: {
       colors: {
         primary: {
-          // Modern dark theme with blue accents
+          // dark theme 
           background: "#0A0A0F",
           surface: "#1A1A2E",
           surfaceHover: "#252545",
